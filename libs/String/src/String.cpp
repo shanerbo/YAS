@@ -5,5 +5,6 @@
 #include "String.hpp"
 namespace YAS {
     String::String() {
+        return;
     }
 }// namespace YAS

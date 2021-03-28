@@ -7,8 +7,7 @@
 namespace YAS {
     class String {
     public:
-        explicit String() {
-        }
+        explicit String();
 
     private:
     };
