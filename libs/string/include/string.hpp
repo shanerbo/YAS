@@ -84,7 +84,7 @@ class string {
 
   string &operator+=(const string &rhs);
   string operator+(const string &rhs);
-
+  friend std::ostream &operator<<(std::ostream &os, string &rhs);
   /**
    * print out string content_
    */

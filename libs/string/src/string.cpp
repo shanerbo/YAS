@@ -83,5 +83,9 @@ string string::reverse() {
 }
 
 const char *string::c_str() const { return content_; }
+std::ostream &operator<<(std::ostream &os, string &rhs) {
+  os << rhs.c_str();
+  return os;
+}
 
 }  // namespace YAS

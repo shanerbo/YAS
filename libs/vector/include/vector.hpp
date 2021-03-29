@@ -7,6 +7,7 @@
 #include <Exception.hpp>
 #include <algorithm>
 #include <cstdio>
+#include <iostream>
 namespace YAS {
 
 template <class T>
@@ -27,7 +28,7 @@ class vector {
    * @param item
    */
   vector(size_t size, T item)
-      : capacity_(2*size_), size_(size), items_(new T[capacity_]) {
+      : capacity_(2 * size_), size_(size), items_(new T[capacity_]) {
     for (int i = 0; i < size_; ++i) {
       items_[i] = item;
     }
@@ -104,7 +105,7 @@ class vector {
 
   void print() {
     for (int i = 0; i < size_; ++i) {
-      printf("%d", items_[i]);
+      std::cout << items_[i] << std::endl;
     }
   }
 
