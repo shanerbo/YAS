@@ -4,6 +4,8 @@
 
 #ifndef YET_ANOTHER_STL_VECTOR_HPP
 #define YET_ANOTHER_STL_VECTOR_HPP
+#include <Exception.hpp>
+#include <algorithm>
 #include <cstdio>
 namespace YAS {
 
@@ -16,7 +18,7 @@ class vector {
   vector() {
     capacity_ = 2;
     size_ = 0;
-    items_ = nullptr;
+    items_ = new T[capacity_];
   }
 
   /**
@@ -24,8 +26,9 @@ class vector {
    * @param size
    * @param item
    */
-  vector(size_t size, T item) : capacity_(2), size_(size), items_(new T[size]) {
-    for (int i = 0; i < size; ++i) {
+  vector(size_t size, T item)
+      : capacity_(2*size_), size_(size), items_(new T[capacity_]) {
+    for (int i = 0; i < size_; ++i) {
       items_[i] = item;
     }
   }
@@ -35,7 +38,7 @@ class vector {
    * @param rhs
    */
   vector(const vector<T>& rhs)
-      : capacity_(rhs.capacity_), size_(rhs.size_), items_(new T[size_]) {
+      : capacity_(rhs.capacity_), size_(rhs.size_), items_(new T[capacity_]) {
     for (int i = 0; i < size_; ++i) {
       items_[i] = rhs.items_[i];
     }
@@ -45,14 +48,14 @@ class vector {
    * Move constructor
    * @param v
    */
-  vector(vector<T>&& v);
+  vector(vector<T>&& v) : vector() { swap(*this, v); }
 
   /**
    * Assignment constructor
    * @param v
    * @return
    */
-  vector& operator=(vector<T> v);
+  vector& operator=(vector<T> v) { swap(*this, v); }
 
   ~vector() {
     size_ = 0;
@@ -63,12 +66,32 @@ class vector {
    * Add item to the back of the vector
    * @param item
    */
-  void push_back(T item);
+  void push_back(T item) {
+    if (size_ >= capacity_) {
+      capacity_ *= 2;  // enlarge capacity by two
+      T* new_items = new T[capacity_];
+      for (int i = 0; i < size_; ++i) {
+        new_items[i] = items_[i];
+      }
+      new_items[size_++] = item;
+      std::swap(new_items, items_);
+      delete[] new_items;
+    } else {
+      items_[size_] = item;
+      size_++;
+    }
+  }
 
   /**
    * Remove last item in the vector and return it
    */
-  T pop_back();
+  T pop_back() {
+    if (size_ > 0) {
+      return items_[size_ - 1];
+    } else {
+      throw Exception("vector is empty");
+    }
+  }
 
   /**
    * Remove all items in vector
@@ -79,9 +102,21 @@ class vector {
 
   size_t capacity() { return capacity_; }
 
+  void print() {
+    for (int i = 0; i < size_; ++i) {
+      printf("%d", items_[i]);
+    }
+  }
+
+  friend void swap(vector<T>& lhs, vector<T>& rhs) {
+    std::swap(lhs.items_, rhs.items_);
+    std::swap(lhs.size_, rhs.size_);
+    std::swap(lhs.capacity_, rhs.capacity_);
+  }
+
  private:
-  size_t size_;
-  size_t capacity_;
+  size_t size_;      // how many items currently we haves
+  size_t capacity_;  // how many items can be stored
   T* items_;
 };
 
