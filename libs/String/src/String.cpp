@@ -21,11 +21,6 @@ String::String(const String &rhs) noexcept
 
 String::String(String &&rhs) noexcept : String() { swap(*this, rhs); }
 
-/**
- * copy and swap idiom, we pass in a copy on purpose
- * @param rhs
- * @return *this
- */
 String &String::operator=(String rhs) {
   swap(rhs, *this);
   return *this;
@@ -61,10 +56,16 @@ String &String::operator+=(const String &rhs) {
   char *new_str = new char[new_len + 1];
   strcpy(new_str, content_);
   strcpy(new_str + size_, rhs.content_);
-  size_ = new_len;
   delete[] content_;
+  size_ = new_len;
   content_ = new_str;
   return *this;
+}
+
+String String::operator+(const String &rhs) {
+  String tmp(*this);
+  tmp += rhs;
+  return tmp;
 }
 
 void swap(String &lhs, String &rhs) {
@@ -80,5 +81,7 @@ String String::reverse() {
   temp[size_] = 0;
   return String(temp);
 }
+
+const char *String::c_str() const { return content_; }
 
 }  // namespace YAS

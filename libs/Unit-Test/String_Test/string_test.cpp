@@ -10,8 +10,8 @@ GTEST_TEST(string_test, constructor_test) {
   auto b = a;
   String c = a;
   String d = "lol";
-  c += d;
-  c.print();
+  auto e = a + d + c + "gg";
+  printf("%s", e.c_str());
 }
 
 int main(int argc, char **argv) {

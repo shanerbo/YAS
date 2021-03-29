@@ -71,6 +71,11 @@ class String {
   String reverse();
 
   /**
+   * return c-like string
+   * @return const char array
+   */
+  const char *c_str() const;
+  /**
    * Get char at specific location
    * @param pos index
    * @return character at that pos
@@ -78,6 +83,7 @@ class String {
   char operator[](size_t pos);
 
   String &operator+=(const String &rhs);
+  String operator+(const String &rhs);
 
   /**
    * print out string content_
@@ -85,7 +91,7 @@ class String {
   void print() { printf("%s", size_ == 0 ? "" : content_); }
 
   /**
-   * Helper function
+   * Helper function for implementing copy and swap idiom
    * @param lhs
    * @param rhs
    */
