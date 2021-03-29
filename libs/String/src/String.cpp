@@ -5,21 +5,28 @@
 #include "String.hpp"
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 namespace YAS {
-String::String() : size_{0}, content_(nullptr) {}
+String::String() noexcept : size_{0}, content_(nullptr) {}
 
-String::String(const char *str) {
-  size_ = strlen(str);
-  content_ = (char *)malloc(size_ + 1);
+String::String(const char *str) noexcept
+    : size_(strlen(str)), content_(new char[size_ + 1]) {
   strcpy(content_, str);
 }
 
-String::String(const String &rhs) {
-  size_ = rhs.size_;
-  content_ = (char *)malloc(size_ + 1);
+String::String(const String &rhs) noexcept
+    : size_(rhs.size_), content_(new char[size_ + 1]) {
   strcpy(content_, rhs.content_);
 }
 
+String::String(String &&rhs) noexcept : String() {
+  swap(*this, rhs);
+}
+
+String &String::operator=(String rhs) {
+  swap(rhs, *this);
+  return *this;
+}
 size_t String::size() const { return size_; }
 
 bool String::empty() const { return size_ == 0; }
@@ -44,4 +51,10 @@ char String::operator[](size_t pos) {
   }
   return content_[pos];
 }
+
+void swap(String &lhs, String &rhs) {
+  std::swap(lhs.size_, rhs.size_);
+  std::swap(lhs.content_, rhs.content_);
+}
+
 }  // namespace YAS

@@ -13,18 +13,26 @@ class String {
   /**
    * default constructor
    */
-  String();
+  String() noexcept;
   /**
    * Constructor
    * @param[in] str char array
    */
-  explicit String(const char *str);
+  explicit String(const char *str) noexcept;
 
   /**
    * Constructor
    * @param[in] str char array
    */
-  String(const String &rhs);
+  String(const String &rhs) noexcept;
+
+  /**
+   * Copy constructor
+   * @param rhs
+   * @return
+   */
+  String &operator=(String rhs);
+  String(String &&rhs) noexcept;
 
   /**
    * Return size of string
@@ -66,8 +74,9 @@ class String {
   /**
    * print out string content_
    */
-  void print() { printf("%s", content_); }
+  void print() { printf("%s", size_ == 0 ? "" : content_); }
 
+  friend void swap(String &lhs, String &rhs);
   ~String() {
     size_ = 0;
     delete content_;

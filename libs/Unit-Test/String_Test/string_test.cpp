@@ -6,9 +6,9 @@
 using namespace YAS;
 
 GTEST_TEST(string_test, constructor_test) {
-  String s("cao ni ma");
-  s.print();
-  std::cout << s[9] << std::endl;
+  String a("cao ni ma");
+  auto b = a;
+  b.print();
 }
 
 int main(int argc, char **argv) {
