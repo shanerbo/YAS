@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.5)
 
-project(String VERSION 0.0.0 DESCRIPTION "ERBO's STL")
+project(string VERSION 0.0.0 DESCRIPTION "ERBO's STL")
 
 set(SOURCES src/string.cpp)
 
