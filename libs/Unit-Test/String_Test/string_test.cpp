@@ -1,15 +1,15 @@
 //
 // Created by shanerbo on 3/27/21.
 //
-#include "String.hpp"
+#include "string.hpp"
 #include <gtest/gtest.h>
 using namespace YAS;
 
 GTEST_TEST(string_test, constructor_test) {
-  String a("cao ni ma");
+  string a("cao ni ma");
   auto b = a;
-  String c = a;
-  String d = "lol";
+  string c = a;
+  string d = "lol";
   auto e = a + d + c + "gg";
   printf("%s", e.c_str());
 }

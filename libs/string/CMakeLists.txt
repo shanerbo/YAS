@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project(String VERSION 0.0.0 DESCRIPTION "ERBO's STL")
 
-set(SOURCES src/String.cpp)
+set(SOURCES src/string.cpp)
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES})
 

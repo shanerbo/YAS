@@ -4,7 +4,7 @@ enable_testing()
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_subdirectory(libs/String)
+add_subdirectory(libs/string)
 add_subdirectory(libs/Exception)
 add_subdirectory(libs/Unit-Test)
 

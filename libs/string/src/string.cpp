@@ -2,40 +2,40 @@
 // Created by shanerbo on 3/27/21.
 //
 
-#include "String.hpp"
+#include "string.hpp"
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 namespace YAS {
-String::String() noexcept : size_{0}, content_(nullptr) {}
+string::string() noexcept : size_{0}, content_(nullptr) {}
 
-String::String(const char *str) noexcept
+string::string(const char *str) noexcept
     : size_(strlen(str)), content_(new char[size_ + 1]) {
   strcpy(content_, str);
 }
 
-String::String(const String &rhs) noexcept
+string::string(const string &rhs) noexcept
     : size_(rhs.size_), content_(new char[size_ + 1]) {
   strcpy(content_, rhs.content_);
 }
 
-String::String(String &&rhs) noexcept : String() { swap(*this, rhs); }
+string::string(string &&rhs) noexcept : string() { swap(*this, rhs); }
 
-String &String::operator=(String rhs) {
+string &string::operator=(string rhs) {
   swap(rhs, *this);
   return *this;
 }
 
-size_t String::size() const { return size_; }
+size_t string::size() const { return size_; }
 
-bool String::empty() const { return size_ == 0; }
+bool string::empty() const { return size_ == 0; }
 
-void String::clear() {
+void string::clear() {
   size_ = 0;
   content_ = nullptr;
 }
 
-int32_t String::find(char c) {
+int32_t string::find(char c) {
   for (int i = 0; i < size_; ++i) {
     if (content_[i] == c) {
       return i;
@@ -44,14 +44,14 @@ int32_t String::find(char c) {
   return -1;
 }
 
-char String::operator[](size_t pos) {
+char string::operator[](size_t pos) {
   if (size_ == 0 or pos >= size_) {
     throw Exception("pos out of range");
   }
   return content_[pos];
 }
 
-String &String::operator+=(const String &rhs) {
+string &string::operator+=(const string &rhs) {
   size_t new_len = rhs.size_ + size_;
   char *new_str = new char[new_len + 1];
   strcpy(new_str, content_);
@@ -62,26 +62,26 @@ String &String::operator+=(const String &rhs) {
   return *this;
 }
 
-String String::operator+(const String &rhs) {
-  String tmp(*this);
+string string::operator+(const string &rhs) {
+  string tmp(*this);
   tmp += rhs;
   return tmp;
 }
 
-void swap(String &lhs, String &rhs) {
+void swap(string &lhs, string &rhs) {
   std::swap(lhs.size_, rhs.size_);
   std::swap(lhs.content_, rhs.content_);
 }
 
-String String::reverse() {
+string string::reverse() {
   char *temp = new char[size_ + 1];
   for (int i = 0; i < static_cast<int>(size_); ++i) {
     temp[i] = content_[size_ - 1 - i];
   }
   temp[size_] = 0;
-  return String(temp);
+  return string(temp);
 }
 
-const char *String::c_str() const { return content_; }
+const char *string::c_str() const { return content_; }
 
 }  // namespace YAS

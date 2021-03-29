@@ -8,37 +8,37 @@
 #include <cstdio>
 #include "Exception.hpp"
 namespace YAS {
-class String {
+class string {
  public:
   /**
    * default constructor
    */
-  String() noexcept;
+  string() noexcept;
 
   /**
    * Constructor
    * @param[in] str char array
    */
-  String(const char *str) noexcept;
+  string(const char *str) noexcept;
 
   /**
    * Constructor
    * @param[in] str char array
    */
-  String(const String &rhs) noexcept;
+  string(const string &rhs) noexcept;
 
   /**
    * Copy constructor
    * @param rhs
    * @return
    */
-  String &operator=(String rhs);
+  string &operator=(string rhs);
 
   /**
    * move constructor
    * @param rhs
    */
-  String(String &&rhs) noexcept;
+  string(string &&rhs) noexcept;
 
   /**
    * Return size of string
@@ -68,7 +68,7 @@ class String {
    * Reverse string
    * @return reversed string
    */
-  String reverse();
+  string reverse();
 
   /**
    * return c-like string
@@ -82,8 +82,8 @@ class String {
    */
   char operator[](size_t pos);
 
-  String &operator+=(const String &rhs);
-  String operator+(const String &rhs);
+  string &operator+=(const string &rhs);
+  string operator+(const string &rhs);
 
   /**
    * print out string content_
@@ -95,9 +95,9 @@ class String {
    * @param lhs
    * @param rhs
    */
-  friend void swap(String &lhs, String &rhs);
+  friend void swap(string &lhs, string &rhs);
 
-  ~String() {
+  ~string() {
     size_ = 0;
     delete[] content_;
   }
