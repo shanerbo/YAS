@@ -19,14 +19,18 @@ String::String(const String &rhs) noexcept
   strcpy(content_, rhs.content_);
 }
 
-String::String(String &&rhs) noexcept : String() {
-  swap(*this, rhs);
-}
+String::String(String &&rhs) noexcept : String() { swap(*this, rhs); }
 
+/**
+ * copy and swap idiom, we pass in a copy on purpose
+ * @param rhs
+ * @return *this
+ */
 String &String::operator=(String rhs) {
   swap(rhs, *this);
   return *this;
 }
+
 size_t String::size() const { return size_; }
 
 bool String::empty() const { return size_ == 0; }
@@ -52,9 +56,29 @@ char String::operator[](size_t pos) {
   return content_[pos];
 }
 
+String &String::operator+=(const String &rhs) {
+  size_t new_len = rhs.size_ + size_;
+  char *new_str = new char[new_len + 1];
+  strcpy(new_str, content_);
+  strcpy(new_str + size_, rhs.content_);
+  size_ = new_len;
+  delete[] content_;
+  content_ = new_str;
+  return *this;
+}
+
 void swap(String &lhs, String &rhs) {
   std::swap(lhs.size_, rhs.size_);
   std::swap(lhs.content_, rhs.content_);
+}
+
+String String::reverse() {
+  char *temp = new char[size_ + 1];
+  for (int i = 0; i < static_cast<int>(size_); ++i) {
+    temp[i] = content_[size_ - 1 - i];
+  }
+  temp[size_] = 0;
+  return String(temp);
 }
 
 }  // namespace YAS

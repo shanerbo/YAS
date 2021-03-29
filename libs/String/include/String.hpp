@@ -14,11 +14,12 @@ class String {
    * default constructor
    */
   String() noexcept;
+
   /**
    * Constructor
    * @param[in] str char array
    */
-  explicit String(const char *str) noexcept;
+  String(const char *str) noexcept;
 
   /**
    * Constructor
@@ -32,6 +33,11 @@ class String {
    * @return
    */
   String &operator=(String rhs);
+
+  /**
+   * move constructor
+   * @param rhs
+   */
   String(String &&rhs) noexcept;
 
   /**
@@ -62,7 +68,7 @@ class String {
    * Reverse string
    * @return reversed string
    */
-  String reverse() {}
+  String reverse();
 
   /**
    * Get char at specific location
@@ -71,15 +77,23 @@ class String {
    */
   char operator[](size_t pos);
 
+  String &operator+=(const String &rhs);
+
   /**
    * print out string content_
    */
   void print() { printf("%s", size_ == 0 ? "" : content_); }
 
+  /**
+   * Helper function
+   * @param lhs
+   * @param rhs
+   */
   friend void swap(String &lhs, String &rhs);
+
   ~String() {
     size_ = 0;
-    delete content_;
+    delete[] content_;
   }
 
  private:
