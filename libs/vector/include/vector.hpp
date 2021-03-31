@@ -9,9 +9,50 @@
 #include <cstdio>
 #include <iostream>
 namespace YAS {
+template <typename vector>
+class VectorIterator {
+ public:
+  using ValueType = typename vector::ValueType;
+  using PointerType = ValueType*;
+  using ReferenceType = ValueType&;
+
+ public:
+  VectorIterator(PointerType ptr) : m_ptr_(ptr) {}
+  VectorIterator& operator++() {
+    m_ptr_++;
+    return *this;
+  }
+  VectorIterator& operator--() {
+    m_ptr_--;
+    return *this;
+  }
+  VectorIterator operator++(int) {
+    auto it = *this;
+    ++(*this);
+    return it;
+  }
+  VectorIterator operator--(int) {
+    auto it = *this;
+    --(*this);
+    return it;
+  }
+  ReferenceType& operator[](int pos) { return *(m_ptr_ + pos); }
+
+  PointerType operator->() { return m_ptr_; }
+  ReferenceType operator*() { return *m_ptr_; }
+  bool operator==(const VectorIterator& rhs) const { return m_ptr_ == rhs; }
+  bool operator!=(const VectorIterator& rhs) const { return m_ptr_ != rhs; }
+
+ private:
+  PointerType m_ptr_;
+};
 
 template <class T>
 class vector {
+ public:
+  using ValueType = T;
+  using Iterator = VectorIterator<vector<T>>;
+
  public:
   /**
    * Default constructor
@@ -102,6 +143,9 @@ class vector {
   size_t size() { return size_; }
 
   size_t capacity() { return capacity_; }
+
+  Iterator begin() { return Iterator(items_); }
+  Iterator end() { return Iterator(items_ + size_); }
 
   void print() {
     for (int i = 0; i < size_; ++i) {
