@@ -57,8 +57,17 @@ GTEST_TEST(vector_test, constructor_test) {
     a.print();
   }
 }
-
-int main(int argc, char **argv) {
+GTEST_TEST(vector_test, iterator_test) {
+  vector<string> a;
+  a.push_back("Welcome");
+  a.push_back("to");
+  a.push_back("my");
+  a.push_back("world");
+  for (const auto& e : a) {
+    std::cout << e.c_str() << std::endl;
+  }
+}
+int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

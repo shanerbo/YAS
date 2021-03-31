@@ -40,8 +40,12 @@ class VectorIterator {
 
   PointerType operator->() { return m_ptr_; }
   ReferenceType operator*() { return *m_ptr_; }
-  bool operator==(const VectorIterator& rhs) const { return m_ptr_ == rhs; }
-  bool operator!=(const VectorIterator& rhs) const { return m_ptr_ != rhs; }
+  bool operator==(const VectorIterator& rhs) const {
+    return m_ptr_ == rhs.m_ptr_;
+  }
+  bool operator!=(const VectorIterator& rhs) const {
+    return m_ptr_ != rhs.m_ptr_;
+  }
 
  private:
   PointerType m_ptr_;
